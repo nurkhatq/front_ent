@@ -26,7 +26,7 @@ interface UserContextType {
 
 const defaultProgress: UserProgress = {
   completedTests: [],
-  unlockedTests: [1], // Первый тест всегда разблокирован
+  unlockedTests: [10], // "1 Бөлім Компьютерлік жүйелер" (ID=10) - первый тест всегда разблокирован
   scores: {},
 };
 
@@ -105,25 +105,28 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   };
   
   
+  // ПРАВИЛЬНАЯ карта последовательности тестов на основе реальных ID
   const getNextTestId = (currentTestId: number): number => {
-    // Карта соответствия ID текущего теста -> ID следующего теста
+    // Карта соответствия: текущий тест ID -> следующий тест ID
+    // Порядок по логической последовательности бөлімов (1->2->3->4->...)
     const testSequence: Record<number, number> = {
-      1: 7,   // После "1 Бөлім" следует "2 бөлім" (ID 7)
-      7: 8,   // После "2 бөлім" следует "3 Бөлім" (ID 8) 
-      8: 9,   // После "3 Бөлім" следует "4 бөлім" (ID 9)
-      9: 10,  // После "4 бөлім" следует "5 бөлім" (ID 10)
-      10: 11, // После "5 бөлім" следует "6 бөлім" (ID 11)
-      11: 12, // После "6 бөлім" следует "7 бөлім" (ID 12)
-      12: 13, // После "7 бөлім" следует "8 бөлім" (ID 13)
-      13: 14, // После "8 бөлім" следует "9 бөлім" (ID 14)
-      14: 2,  // После "9 бөлім" следует "10 бөлім" (ID 2)
-      2: 3,   // После "10 бөлім" следует "11 бөлім" (ID 3)
-      3: 4,   // После "11 бөлім" следует "12 бөлім" (ID 4)
-      4: 5,   // После "12 бөлім" следует "13 бөлім" (ID 5)
-      5: 6    // После "13 бөлім" следует "14 бөлім" (ID 6)
+      10: 3,  // "1 Бөлім" (ID=10) -> "2 бөлім" (ID=3)
+      3: 1,   // "2 бөлім" (ID=3) -> "3 Бөлім" (ID=1)
+      1: 5,   // "3 Бөлім" (ID=1) -> "4 бөлім" (ID=5)
+      5: 9,   // "4 бөлім" (ID=5) -> "5 бөлім" (ID=9)
+      9: 6,   // "5 бөлім" (ID=9) -> "6 бөлім" (ID=6)
+      6: 2,   // "6 бөлім" (ID=6) -> "7 бөлім" (ID=2)
+      2: 13,  // "7 бөлім" (ID=2) -> "8 бөлім" (ID=13)
+      13: 7,  // "8 бөлім" (ID=13) -> "9 бөлім" (ID=7)
+      7: 8,   // "9 бөлім" (ID=7) -> "10 бөлім" (ID=8)
+      8: 14,  // "10 бөлім" (ID=8) -> "11 бөлім" (ID=14)
+      14: 11, // "11 бөлім" (ID=14) -> "12 бөлім" (ID=11)
+      11: 12, // "12 бөлім" (ID=11) -> "13 бөлім" (ID=12)
+      12: 4,  // "13 бөлім" (ID=12) -> "14 бөлім" (ID=4)
+      // 4 - последний тест, нет следующего
     };
     
-    return testSequence[currentTestId] || currentTestId + 1;
+    return testSequence[currentTestId] || -1; // -1 если следующего теста нет
   };
   
   const completeTest = (testId: number, score: number) => {
@@ -139,7 +142,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
         return {
           ...prev,
           completedTests: [...prev.completedTests, testId],
-          unlockedTests: shouldUnlockNext && !prev.unlockedTests.includes(nextTestId) 
+          unlockedTests: shouldUnlockNext && nextTestId !== -1 && !prev.unlockedTests.includes(nextTestId) 
             ? [...prev.unlockedTests, nextTestId] 
             : prev.unlockedTests,
           scores: newScores,

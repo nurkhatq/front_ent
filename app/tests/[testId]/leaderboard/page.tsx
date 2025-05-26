@@ -157,7 +157,7 @@ export default function LeaderboardPage() {
             Рейтинг: {testTitle}
           </LeaderboardTitle>
           <Button as={Link} href={`/tests/${testId}`}>
-            Пройти тест снова
+            Тестті қайтадан өту
           </Button>
         </LeaderboardHeader>
         

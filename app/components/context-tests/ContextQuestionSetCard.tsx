@@ -91,7 +91,7 @@ export const ContextQuestionSetCard: React.FC<ContextQuestionSetCardProps> = ({ 
     ? (questionSet.description.length > 150 
         ? questionSet.description.substring(0, 147) + '...' 
         : questionSet.description)
-    : 'В этом контекстном тесте вам предстоит проанализировать информацию и ответить на вопросы по тексту.';
+    : 'Осы мәтіндік тапсырмада сіз берілген ақпаратты талдап, мәтін бойынша сұрақтарға жауап беруіңіз керек.';
 
   return (
     <motion.div whileHover={{ y: -5 }} transition={{ duration: 0.2 }}>

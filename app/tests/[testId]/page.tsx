@@ -230,7 +230,7 @@ export default function TestPage() {
     const handleBeforeUnload = (e: BeforeUnloadEvent) => {
       if (testInProgress && !testCompleted) {
         e.preventDefault();
-        e.returnValue = 'Вы уверены, что хотите покинуть страницу? Ваш тест не будет завершен, и результаты не будут сохранены.';
+        e.returnValue = 'Сіз бұл бетті шынымен тастап кеткіңіз келетініне сенімдісіз бе? Тест аяқталмайды және нәтижелер сақталмайды.';
         return e.returnValue;
       }
     };
@@ -286,7 +286,7 @@ export default function TestPage() {
       const unansweredQuestions = questions.filter(q => !selectedAnswers.has(q.id));
       
       // Показываем уведомление
-      alert(`Вы ответили не на все вопросы. Пожалуйста, ответьте на вопросы: ${unansweredQuestions.map(q => q.number).join(', ')}`);
+      alert(`Барлық сұраққа жауап берілмеді. Өтініш, берілген сұрақтарға жауап беріңіз: ${unansweredQuestions.map(q => q.number).join(', ')}`);
       
       // Переходим к первому неотвеченному вопросу
       if (unansweredQuestions.length > 0) {
@@ -419,7 +419,7 @@ export default function TestPage() {
     return (
       <TestContainer>
         <ErrorMessage>
-          В этом тесте нет вопросов. Пожалуйста, выберите другой тест.
+          Бұл тестте сұрақтар жоқ. Өтінеміз, басқа тесті таңдаңыз.
         </ErrorMessage>
       </TestContainer>
     );
@@ -461,9 +461,9 @@ export default function TestPage() {
       {showConfirmDialog && (
         <ConfirmationDialog>
           <DialogContent>
-            <DialogTitle>Подтверждение выхода</DialogTitle>
+            <DialogTitle>Шығуды растау</DialogTitle>
             <DialogText>
-              Вы не завершили тест. Если вы покинете страницу, ваши ответы не будут сохранены в системе. Вы уверены?
+              Сіз тестті аяқтамадыңыз. Егер сіз беттен шықсаңыз, жауаптарыңыз жүйеде сақталмайды. Шығатыныңызға сенімдісіз бе?
             </DialogText>
             <DialogButtons>
               <button
@@ -476,7 +476,7 @@ export default function TestPage() {
                 }}
                 onClick={handleCancelExit}
               >
-                Отмена
+                Болдырмау
               </button>
               <button
                 style={{
@@ -489,7 +489,7 @@ export default function TestPage() {
                 }}
                 onClick={handleConfirmExit}
               >
-                Выйти
+                Шығу
               </button>
             </DialogButtons>
           </DialogContent>

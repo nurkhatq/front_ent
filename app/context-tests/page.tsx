@@ -76,7 +76,7 @@ export default function ContextTestsPage() {
         });
         if (!data || !Array.isArray(data)) {
           console.error('Received invalid data format for question sets:', data);
-          setError('Получены неверные данные. Пожалуйста, попробуйте позже.');
+          setError('Қате деректер алынды. Қайталап көріңізші.');
           setQuestionSets([]);
         } else {
           // Фильтруем некорректные данные, если такие есть
@@ -86,7 +86,7 @@ export default function ContextTestsPage() {
         setLoading(false);
       } catch (err) {
         console.error('Error fetching context tests:', err);
-        setError('Не удалось загрузить контекстные тесты. Пожалуйста, попробуйте позже.');
+        setError('Контексттік тесттерді жүктеу мүмкін болмады. Қайталап көріңізші.');
         setLoading(false);
       }
     };
@@ -129,7 +129,7 @@ export default function ContextTestsPage() {
         ) : (
           <ContextTestsGrid>
             {questionSets.length === 0 ? (
-              <div>На данный момент нет доступных контекстных тестов.</div>
+              <div>Қазіргі уақытта қолжетімді контексттік тесттер жоқ.</div>
             ) : (
               questionSets.map((questionSet, index) => (
                 <motion.div

@@ -323,7 +323,7 @@ export default function VideoPage() {
   }, [video, router]);
   
   if (!video) {
-    return <div>Загрузка...</div>;
+    return <div>Жүктелуде...</div>;
   }
   
   // Получаем связанные видео (из той же категории)

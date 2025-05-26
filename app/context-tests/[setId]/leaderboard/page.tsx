@@ -115,7 +115,7 @@ export default function ContextTestLeaderboardPage() {
         setLoading(false);
       } catch (err) {
         console.error('Error fetching leaderboard:', err);
-        setError('Не удалось загрузить рейтинг. Пожалуйста, попробуйте позже.');
+        setError('Рейтингті алу кезінде қате пайда болды. Қайтадан көріңіз.');
         setLoading(false);
       }
     };
@@ -180,7 +180,7 @@ export default function ContextTestLeaderboardPage() {
             href={`/context-tests/${setId}`}
             $variant="secondary"
           >
-            Пройти тест снова
+            Тестті қайта өту
           </Button>
         </LeaderboardHeader>
         

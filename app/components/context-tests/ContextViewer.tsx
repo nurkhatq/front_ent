@@ -64,7 +64,7 @@ export const ContextViewer: React.FC<ContextViewerProps> = ({ context }) => {
   if (!context) {
     return (
       <ContextContainer>
-        <ErrorMessage>Контекст не найден</ErrorMessage>
+        <ErrorMessage>Контекст табылмады</ErrorMessage>
       </ContextContainer>
     );
   }
@@ -91,7 +91,7 @@ export const ContextViewer: React.FC<ContextViewerProps> = ({ context }) => {
               <p key={index}>{paragraph}</p>
             ))
           ) : (
-            <p>Текст контекста отсутствует</p>
+            <p>Контекстің мәтіні табылмады</p>
           )}
         </ContextText>
         

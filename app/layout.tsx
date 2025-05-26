@@ -13,8 +13,8 @@ const roboto = Roboto({
 });
 
 export const metadata: Metadata = {
-  title: 'ENT Trainer - Подготовка к ЕНТ по информатике',
-  description: 'Интерактивный тренажёр для подготовки к Единому Национальному Тестированию по информатике',
+  title: 'ENT Trainer - Информатикадан ҰБТ-ға дайындық',
+  description: 'Информатика пәні бойынша Ұлттық Бірыңғай Тестілеуге дайындалуға арналған интерактивті тренажер',
 };
 
 export default function RootLayout({

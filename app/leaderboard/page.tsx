@@ -612,7 +612,7 @@ export default function LeaderboardPage() {
         setLoading(false);
       } catch (err) {
         console.error('Error fetching leaderboards:', err);
-        setError('Не удалось загрузить рейтинг. Пожалуйста, попробуйте позже.');
+        setError('Рейтингті жүктеу мүмкін болмады. Қайталап көріңізші.');
         setLoading(false);
       }
     };

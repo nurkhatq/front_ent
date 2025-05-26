@@ -163,7 +163,7 @@ export default function ContextTestPage() {
         }
       } catch (err) {
         console.error('Error fetching context test:', err);
-        setError('Не удалось загрузить контекстный тест. Пожалуйста, попробуйте позже.');
+        setError('Контексттік тестті жүктеу мүмкін болмады. Қайталап көріңізші.');
         setLoading(false);
       }
     };
@@ -226,7 +226,7 @@ export default function ContextTestPage() {
     const handleBeforeUnload = (e: BeforeUnloadEvent) => {
       if (testInProgress && !testCompleted) {
         e.preventDefault();
-        e.returnValue = 'Вы уверены, что хотите покинуть страницу? Ваш тест не будет завершен, и результаты не будут сохранены.';
+        e.returnValue = 'Сіз бұл бетті шынымен тастап кеткіңіз келетініне сенімдісіз бе? Тест аяқталмайды және нәтижелер сақталмайды.';
         return e.returnValue;
       }
     };
@@ -287,7 +287,7 @@ export default function ContextTestPage() {
       const unansweredQuestions = questionSet.questions.filter(q => !selectedAnswers.has(q.id));
       
       // Показываем уведомление
-      alert(`Вы ответили не на все вопросы. Пожалуйста, ответьте на вопросы: ${unansweredQuestions.map(q => q.number).join(', ')}`);
+      alert(`Сіз барлық сұраққа жауап бермедіңіз. Осы сұрақтарға жауап беріңіз: ${unansweredQuestions.map(q => q.number).join(', ')}`);
       
       // Переходим к первому неотвеченному вопросу
       if (unansweredQuestions.length > 0) {
@@ -396,7 +396,7 @@ export default function ContextTestPage() {
     return (
       <TestContainer>
         <ErrorMessage>
-          Контекстный тест не найден. Пожалуйста, выберите другой тест.
+          контексттік мәтін табылмады. Басқа тестті таңдаңыз.
         </ErrorMessage>
       </TestContainer>
     );
@@ -422,7 +422,7 @@ export default function ContextTestPage() {
     return (
       <TestContainer>
         <ErrorMessage>
-          В этом контекстном тесте нет вопросов. Пожалуйста, выберите другой тест.
+          Бұл контексттік тестте сұрақтар жоқ. Басқа тестті таңдаңыз.
         </ErrorMessage>
       </TestContainer>
     );

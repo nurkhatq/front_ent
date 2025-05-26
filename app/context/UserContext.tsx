@@ -7,6 +7,7 @@ interface UserProgress {
   completedTests: number[];
   unlockedTests: number[];
   scores: Record<number, number>; // testId => score в процентах
+  version?: number; // Добавляем версию данных
 }
 
 interface UserContextType {
@@ -24,10 +25,13 @@ interface UserContextType {
   getTestScore: (testId: number) => number | null;
 }
 
+const CURRENT_DATA_VERSION = 2; // Увеличиваем версию при изменении структуры тестов
+
 const defaultProgress: UserProgress = {
   completedTests: [],
-  unlockedTests: [10], // "1 Бөлім Компьютерлік жүйелер" (ID=10) - первый тест всегда разблокирован
+  unlockedTests: [183], // "1 Бөлім Компьютерлік жүйелер" (ID=183) - первый тест всегда разблокирован
   scores: {},
+  version: CURRENT_DATA_VERSION,
 };
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
@@ -46,12 +50,26 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
         setStudentName(savedName);
       }
       setIsLoading(false);
+      
       const savedProgress = localStorage.getItem('userProgress');
       if (savedProgress) {
         try {
-          setProgress(JSON.parse(savedProgress));
+          const parsedProgress = JSON.parse(savedProgress);
+          
+          // Проверяем версию данных
+          if (parsedProgress.version !== CURRENT_DATA_VERSION) {
+            console.log('Updating user progress data to new version');
+            // Если версия не совпадает - сбрасываем прогресс
+            setProgress(defaultProgress);
+            // Очищаем старые данные
+            localStorage.removeItem('userProgress');
+          } else {
+            setProgress(parsedProgress);
+          }
         } catch (e) {
           console.error('Failed to parse user progress:', e);
+          // При ошибке парсинга тоже сбрасываем
+          setProgress(defaultProgress);
         }
       }
     }
@@ -105,25 +123,25 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   };
   
   
-  // ПРАВИЛЬНАЯ карта последовательности тестов на основе реальных ID
+  // ОБНОВЛЕННАЯ карта последовательности тестов на основе новых ID
   const getNextTestId = (currentTestId: number): number => {
     // Карта соответствия: текущий тест ID -> следующий тест ID
     // Порядок по логической последовательности бөлімов (1->2->3->4->...)
     const testSequence: Record<number, number> = {
-      10: 3,  // "1 Бөлім" (ID=10) -> "2 бөлім" (ID=3)
-      3: 1,   // "2 бөлім" (ID=3) -> "3 Бөлім" (ID=1)
-      1: 5,   // "3 Бөлім" (ID=1) -> "4 бөлім" (ID=5)
-      5: 9,   // "4 бөлім" (ID=5) -> "5 бөлім" (ID=9)
-      9: 6,   // "5 бөлім" (ID=9) -> "6 бөлім" (ID=6)
-      6: 2,   // "6 бөлім" (ID=6) -> "7 бөлім" (ID=2)
-      2: 13,  // "7 бөлім" (ID=2) -> "8 бөлім" (ID=13)
-      13: 7,  // "8 бөлім" (ID=13) -> "9 бөлім" (ID=7)
-      7: 8,   // "9 бөлім" (ID=7) -> "10 бөлім" (ID=8)
-      8: 14,  // "10 бөлім" (ID=8) -> "11 бөлім" (ID=14)
-      14: 11, // "11 бөлім" (ID=14) -> "12 бөлім" (ID=11)
-      11: 12, // "12 бөлім" (ID=11) -> "13 бөлім" (ID=12)
-      12: 4,  // "13 бөлім" (ID=12) -> "14 бөлім" (ID=4)
-      // 4 - последний тест, нет следующего
+      183: 196, // "1 Бөлім" (ID=183) -> "2 бөлім" (ID=196)
+      196: 185, // "2 бөлім" (ID=196) -> "3 Бөлім" (ID=185)
+      185: 193, // "3 Бөлім" (ID=185) -> "4 бөлім" (ID=193)
+      193: 190, // "4 бөлім" (ID=193) -> "5 бөлім" (ID=190)
+      190: 188, // "5 бөлім" (ID=190) -> "6 бөлім" (ID=188)
+      188: 187, // "6 бөлім" (ID=188) -> "7 бөлім" (ID=187)
+      187: 191, // "7 бөлім" (ID=187) -> "8 бөлім" (ID=191)
+      191: 194, // "8 бөлім" (ID=191) -> "9 бөлім" (ID=194)
+      194: 192, // "9 бөлім" (ID=194) -> "10 бөлім" (ID=192)
+      192: 186, // "10 бөлім" (ID=192) -> "11 бөлім" (ID=186)
+      186: 189, // "11 бөлім" (ID=186) -> "12 бөлім" (ID=189)
+      189: 195, // "12 бөлім" (ID=189) -> "13 бөлім" (ID=195)
+      195: 184, // "13 бөлім" (ID=195) -> "14 бөлім" (ID=184)
+      // 184 - последний тест, нет следующего
     };
     
     return testSequence[currentTestId] || -1; // -1 если следующего теста нет

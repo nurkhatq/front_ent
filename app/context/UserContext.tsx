@@ -25,7 +25,7 @@ interface UserContextType {
   getTestScore: (testId: number) => number | null;
 }
 
-const CURRENT_DATA_VERSION = 3; // Увеличиваем версию при изменении ID тестов
+const CURRENT_DATA_VERSION = 4; // Увеличиваем версию при изменении ID тестов
 
 const defaultProgress: UserProgress = {
   completedTests: [],

@@ -60,8 +60,8 @@ export const Footer = () => {
       <FooterContent>
         <FooterColumn>
           <FooterTitle>Байланыс</FooterTitle>
-          <FooterText>Email: info@enttrainer.kz</FooterText>
-          <FooterText>Телефон: +7 (XXX) XXX XX XX</FooterText>
+          <FooterText>Email: ultra777.kz@gmail.com</FooterText>
+          <FooterText>Телефон: +7 (702) 349 49 50</FooterText>
         </FooterColumn>
       </FooterContent>
     </FooterContainer>
